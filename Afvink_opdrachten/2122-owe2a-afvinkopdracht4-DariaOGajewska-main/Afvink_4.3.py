@@ -1,5 +1,6 @@
 import re
 
+
 def openbestand(bestand):
    '''Opent het bestand en controleert of het een eiwitsequentie is
    input = een bestand
@@ -8,22 +9,24 @@ def openbestand(bestand):
    '''
 
    open_bestand = open(bestand, 'r')
-   #read_from_second_line = open_bestand.readline()
+   read_from_second_line = open_bestand.readline()
 
-   header = []
    seq = []
 
-   go = False
+   count = 0
    for regel in open_bestand:
-      if regel.startswith('>'):
-         header.append(regel)
-      else:
-         s = regel.strip()
-         seq.append(s)
+      if count < 5:
+         print(regel)
+         seq.append(regel)
+      count+=1
 
-   for element in seq:
+   sequence = ''.join(seq)
+
+   go = True
+
+   for element in sequence:
       for e in element:
-         if e == ['CGAT']:
+         if e == ['AGTC']:
             go = True
          else:
             go = False
@@ -33,12 +36,9 @@ def openbestand(bestand):
    else:
       print('It is NOT a DNA sequence')
 
-   sequence = ''.join(seq)
-
 
 def main():
    bestand = 'Mus_musculus.GRCm38.dna.chromosome.1.fa'
    openbestand(bestand)
-
 
 main()
